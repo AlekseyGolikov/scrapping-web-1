@@ -1,16 +1,13 @@
-# This is a sample Python script.
+import requests
+from bs4 import BeautifulSoup
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+url = "https://scrapingclub.com/exercise/list_basic/?page=1"
 
+response = requests.get(url)
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+soup = BeautifulSoup(response.text, 'lxml')
 
+items = soup.find_all('div', class_='col-lg-4 col-md-6 mb-4')
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+for item in items:
+    print(item.text)
